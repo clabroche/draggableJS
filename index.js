@@ -42,14 +42,21 @@ function DraggableJS(options) {
           .initalPosition.offset.y}px)`
       });
     }, 100);
-    $(draggable).on("touchstart", e => this.start(e, draggable));
-    $(draggable).on("touchmove", e => this.move(e, draggable));
-    $(draggable).on("touchend", e => this.end(e, draggable));
+    $(draggable).on("touchstart", e =>
+      this.start(e.changedTouches[0], draggable)
+    );
+    $(draggable).on("touchmove", e =>
+    this.move(e.changedTouches[0], draggable)
+  );
+  $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
+  $(draggable).on("mousedown", e => this.start(e, draggable));
+  $(draggable).on("mouseup", e => this.end(e, draggable));
+  // $(draggable).on("mouseleave", e => this.end(e, draggable));
+  $(draggable).on("mousemove", e => this.move(e, draggable));
   });
 }
 
 DraggableJS.prototype.start = function(e, draggable) {
-  e = e.changedTouches[0];
   draggable.is_click = true;
   draggable.tempPosition = {
     x: e.pageX,
@@ -60,9 +67,11 @@ DraggableJS.prototype.start = function(e, draggable) {
 
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
-  e = e.changedTouches[0];
-  const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY)
-  if (classesFromPoint.includes(this.stackClass) || !classesFromPoint.includes(this.dropClass)) {
+  const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
+  if (
+    classesFromPoint.includes(this.stackClass) ||
+    !classesFromPoint.includes(this.dropClass)
+  ) {
     $(draggable).css({
       top: 0,
       left: 0,
@@ -76,7 +85,6 @@ DraggableJS.prototype.end = function(e, draggable) {
 
 DraggableJS.prototype.move = function(e, draggable) {
   var i;
-  e = e.changedTouches[0];
   if (draggable.is_click) {
     const initialX = draggable.tempPosition.x;
     const initialY = draggable.tempPosition.y;
