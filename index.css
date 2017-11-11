@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.navbar {
+  background-color: red;
+  width: 100vw;
+  height: 75px;
+}
+
+.container {
+  width: 100vw;
+  height: calc(100vh - 75px);
+  display: flex;
+}
+.otherList {
+  width: 300px;
+  height: calc(100vh - 75px);
+  background-color: orange;
+}
+.listOfDraggable {
+  background-color: purple;
+  width: 250px;
+  height: calc(100vh - 75px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+.element {
+  background-color: green;
+  width: 90%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  margin-top: 10px;
+}
+.dropzone {
+  background-color: yellow;
+  width: calc(100vw - 250px);
+  height: 100%;
+}
