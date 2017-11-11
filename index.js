@@ -1,62 +1,56 @@
-const $ = require("jquery");
-function DraggableJS(options) {
-  if (!options || !options.hasOwnProperty("class"))
-    this.draggableClass = "draggable";
-  else this.draggableClass = options.class;
-  if (!options || !options.hasOwnProperty("stackClass"))
-    this.stackClass = "stack";
-  else this.stackClass = options.stackClass;
-  if (!options || !options.hasOwnProperty("dropClass"))
-    this.dropClass = "dropzone";
-  else this.dropClass = options.dropClass;
+const $ = require('jquery');
+function DraggableJS (options) {
+  if (!options || !options.hasOwnProperty('class')) { this.draggableClass = 'draggable'; } else this.draggableClass = options.class;
+  if (!options || !options.hasOwnProperty('stackClass')) { this.stackClass = 'stack'; } else this.stackClass = options.stackClass;
+  if (!options || !options.hasOwnProperty('dropClass')) { this.dropClass = 'dropzone'; } else this.dropClass = options.dropClass;
 
-  Array.from($("." + this.draggableClass)).map(draggable => {
+  Array.from($('.' + this.draggableClass)).map(draggable => {
     draggable.initalPosition = $(draggable).css([
-      "width",
-      "height",
-      "top",
-      "left",
-      "bottom",
-      "right",
-      "marginRight",
-      "marginTop",
-      "marginLeft",
-      "marginBottom",
-      "paddingRight",
-      "paddingTop",
-      "paddingLeft",
-      "paddingBottom",
-      "position"
+      'width',
+      'height',
+      'top',
+      'left',
+      'bottom',
+      'right',
+      'marginRight',
+      'marginTop',
+      'marginLeft',
+      'marginBottom',
+      'paddingRight',
+      'paddingTop',
+      'paddingLeft',
+      'paddingBottom',
+      'position'
     ]);
     draggable.initalPosition.offset = {
       x: draggable.offsetLeft,
       y: draggable.offsetTop
     };
-    setTimeout(function() {
+    setTimeout(function () {
       $(draggable).css({
         top: 0,
         left: 0,
-        position: "absolute",
+        position: 'absolute',
         width: draggable.initalPosition.width,
         transform: `translate(${draggable.initalPosition.offset.x}px,${draggable
           .initalPosition.offset.y}px)`
       });
     }, 5);
-    $(draggable).on("touchstart", e =>
+    $(draggable).on('touchstart', e =>
       this.start(e.changedTouches[0], draggable)
     );
-    $(draggable).on("touchmove", e =>
+    $(draggable).on('touchmove', e =>
       this.move(e.changedTouches[0], draggable)
     );
-    $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
-    $(draggable).on("mousedown", e => this.start(e, draggable));
-    $(draggable).on("mouseup", e => this.end(e, draggable));
+    $(draggable).on('touchend', e => this.end(e.changedTouches[0], draggable));
+    $(draggable).on('mousedown', e => this.start(e, draggable));
+    $(draggable).on('mouseup', e => this.end(e, draggable));
     // $(draggable).on("mouseleave", e => this.end(e, draggable));
-    $(draggable).on("mousemove", e => this.move(e, draggable));
+    $(draggable).on('mousemove', e => this.move(e, draggable));
   });
 }
 
-DraggableJS.prototype.start = function(e, draggable) {
+DraggableJS.prototype.start = function (e, draggable) {
   draggable.is_click = true;
   draggable.tempPosition = {
     x: e.pageX,
@@ -65,7 +59,7 @@ DraggableJS.prototype.start = function(e, draggable) {
   draggable.tempOffset = $(draggable).offset();
 };
 
-DraggableJS.prototype.end = function(e, draggable) {
+DraggableJS.prototype.end = function (e, draggable) {
   draggable.is_click = false;
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
   if (
@@ -75,7 +69,7 @@ DraggableJS.prototype.end = function(e, draggable) {
     $(draggable).css({
       top: 0,
       left: 0,
-      position: "absolute",
+      position: 'absolute',
       width: draggable.initalPosition.width,
       transform: `translate(${draggable.initalPosition.offset.x}px,${draggable
         .initalPosition.offset.y}px)`
@@ -83,8 +77,7 @@ DraggableJS.prototype.end = function(e, draggable) {
   }
 };
 
-DraggableJS.prototype.move = function(e, draggable) {
-  var i;
+DraggableJS.prototype.move = function (e, draggable) {
   if (draggable.is_click) {
     const initialX = draggable.tempPosition.x;
     const initialY = draggable.tempPosition.y;
@@ -95,17 +88,17 @@ DraggableJS.prototype.move = function(e, draggable) {
         initialY +
         draggable.tempOffset.top}px)`,
       width: draggable.initalPosition.width,
-      position: "absolute"
+      position: 'absolute'
     });
   }
 };
 
-function getClassesFromPoint(x, y) {
-  var elements = [],
-    previousPointerEvents = [],
-    current,
-    i,
-    d;
+function getClassesFromPoint (x, y) {
+  const previousPointerEvents = [];
+  let elements = [];
+  let current;
+  let i;
+  let d;
 
   // get all elements via elementFromPoint, and remove them from hit-testing in order
   while (
@@ -116,31 +109,29 @@ function getClassesFromPoint(x, y) {
     // push the element and its current style
     elements.push(current);
     previousPointerEvents.push({
-      value: current.style.getPropertyValue("pointer-events"),
-      priority: current.style.getPropertyPriority("pointer-events")
+      value: current.style.getPropertyValue('pointer-events'),
+      priority: current.style.getPropertyPriority('pointer-events')
     });
 
     // add "pointer-events: none", to get to the underlying element
-    current.style.setProperty("pointer-events", "none", "important");
+    current.style.setProperty('pointer-events', 'none', 'important');
   }
 
   // restore the previous pointer-events values
-  for (i = previousPointerEvents.length; (d = previousPointerEvents[--i]); ) {
+  for (i = previousPointerEvents.length; (d = previousPointerEvents[--i]);) {
     elements[i].style.setProperty(
-      "pointer-events",
-      d.value ? d.value : "",
+      'pointer-events',
+      d.value ? d.value : '',
       d.priority
     );
   }
   elements.shift();
   elements = elements.map(element => {
-    return element.className.split(" ");
+    return element.className.split(' ');
   });
   elements = [].concat.apply([], elements);
   // return our results
   return elements;
 }
-module.exports = DraggableJS
-if (window) {
-  window.DraggableJS = DraggableJS;
-}
+module.exports = DraggableJS;
+if (window) window.DraggableJS = DraggableJS;
