@@ -1,41 +1,49 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 const $ = require("jquery");
-Array.from($(".draggable")).map(draggable => {
+function DraggableJS(options) {
+  if (!options || !options.hasOwnProperty("class"))
+  this.draggableClass = ".draggable";
+  else 
+  this.draggableClass = options.class
   
-  draggable.initalPosition = $(draggable).css([
-    "width",
-    "height",
-    "top",
-    "left",
-    "bottom",
-    "right",
-    "marginRight",
-    "marginTop",
-    "marginLeft",
-    "marginBottom",
-    "paddingRight",
-    "paddingTop",
-    "paddingLeft",
-    "paddingBottom",
-    "position"
-  ]);
-  draggable.initalPosition.offset = {
-    x: draggable.offsetLeft,
-    y: draggable.offsetTop
-  };
-  console.log(draggable.initalPosition.offset.y);
-  $(draggable).css({
-    top: 0,
-    left: 0,
-    position: "absolute",
-    width: draggable.initalPosition.width,
-    transform: `translate(${draggable.initalPosition.offset.x}px,${draggable.initalPosition.offset.y}px)`
+  Array.from($(this.draggableClass)).map(draggable => {
+    console.log(draggable.offsetTop);
+    draggable.initalPosition = $(draggable).css([
+      "width",
+      "height",
+      "top",
+      "left",
+      "bottom",
+      "right",
+      "marginRight",
+      "marginTop",
+      "marginLeft",
+      "marginBottom",
+      "paddingRight",
+      "paddingTop",
+      "paddingLeft",
+      "paddingBottom",
+      "position"
+    ]);
+    draggable.initalPosition.offset = {
+      x: draggable.offsetLeft,
+      y: draggable.offsetTop
+    };
+    setTimeout(function() {
+      $(draggable).css({
+        top: 0,
+        left: 0,
+        position: "absolute",
+        width: draggable.initalPosition.width,
+        transform: `translate(${draggable.initalPosition.offset.x}px,${draggable
+          .initalPosition.offset.y}px)`
+      });
+    }, 100);
+    $(draggable).on("touchstart", e => start(e, draggable));
+    $(draggable).on("touchmove", e => move(e, draggable));
+    $(draggable).on("touchend", e => end(e, draggable));
   });
-  $(draggable).on("touchstart", e => start(e, draggable));
-  $(draggable).on("touchmove", e => move(e, draggable));
-  $(draggable).on("touchend", e => end(e, draggable));
-});
-
+}
 function start(e, draggable) {
   e = e.changedTouches[0];
   draggable.is_click = true;
@@ -62,19 +70,21 @@ function move(e, draggable) {
     if (transformX) {
       // transformX = transformX.toString().split("(")[1].split(')')[0].split(",");
     }
-    console.log(draggable.tempOffset.top  )
+    console.log(draggable.tempOffset.top);
     const allMove = $(draggable).css({
       transform: `translate(${e.pageX -
         initialX +
         draggable.tempOffset.left}px, ${e.pageY -
         initialY +
-        (draggable.tempOffset.top)}px)`,
+        draggable.tempOffset.top}px)`,
       width: draggable.initalPosition.width,
       position: "absolute"
     });
   }
 }
 
+
+new DraggableJS()
 },{"jquery":2}],2:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
