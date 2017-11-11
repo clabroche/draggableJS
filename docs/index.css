@@ -19,7 +19,7 @@ body {
   height: calc(100vh - 75px);
   background-color: orange;
 }
-.listOfDraggable {
+.stack {
   background-color: purple;
   width: 250px;
   height: calc(100vh - 75px);
