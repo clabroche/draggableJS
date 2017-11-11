@@ -42,18 +42,18 @@ function DraggableJS(options) {
         transform: `translate(${draggable.initalPosition.offset.x}px,${draggable
           .initalPosition.offset.y}px)`
       });
-    }, 100);
+    }, 5);
     $(draggable).on("touchstart", e =>
       this.start(e.changedTouches[0], draggable)
     );
     $(draggable).on("touchmove", e =>
-    this.move(e.changedTouches[0], draggable)
-  );
-  $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
-  $(draggable).on("mousedown", e => this.start(e, draggable));
-  $(draggable).on("mouseup", e => this.end(e, draggable));
-  // $(draggable).on("mouseleave", e => this.end(e, draggable));
-  $(draggable).on("mousemove", e => this.move(e, draggable));
+      this.move(e.changedTouches[0], draggable)
+    );
+    $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
+    $(draggable).on("mousedown", e => this.start(e, draggable));
+    $(draggable).on("mouseup", e => this.end(e, draggable));
+    // $(draggable).on("mouseleave", e => this.end(e, draggable));
+    $(draggable).on("mousemove", e => this.move(e, draggable));
   });
 }
 
@@ -101,8 +101,6 @@ DraggableJS.prototype.move = function(e, draggable) {
   }
 };
 
-new DraggableJS();
-
 function getClassesFromPoint(x, y) {
   var elements = [],
     previousPointerEvents = [],
@@ -142,6 +140,10 @@ function getClassesFromPoint(x, y) {
   elements = [].concat.apply([], elements);
   // return our results
   return elements;
+}
+module.exports = DraggableJS
+if (window) {
+  window.DraggableJS = DraggableJS;
 }
 
 },{"jquery":2}],2:[function(require,module,exports){
