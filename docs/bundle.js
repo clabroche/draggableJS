@@ -42,6 +42,11 @@ DraggableJS.prototype.start = function(e, draggable) {
 
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
+  if (draggable.is_end) return
+  draggable.is_end = true
+  setTimeout(_=>{
+    draggable.is_end = false
+  },100)
   if(draggable.hasOwnProperty('length')) draggable = draggable[0]
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
   if (
@@ -121,7 +126,7 @@ DraggableJS.prototype.initDraggable = function(draggable) {
   $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
   $(draggable).on("mousedown", e => this.start(e, draggable));
   $(draggable).on("mouseup", e => this.end(e, draggable));
-  $(draggable).on("mouseleave", e => this.end(e, draggable));
+  // $(draggable).on("mouseleave", e => this.end(e, draggable));
   $(draggable).on("mousemove", e => this.move(e, draggable));
 };
 

@@ -15,13 +15,13 @@ body {
   display: flex;
 }
 .otherList {
-  width: 300px;
+  width: 150px;
   height: calc(100vh - 75px);
   background-color: orange;
 }
 .stack {
   background-color: purple;
-  width: 250px;
+  width: 100px;
   height: calc(100vh - 75px);
   display: flex;
   flex-direction: column;
