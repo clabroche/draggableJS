@@ -41,11 +41,6 @@ DraggableJS.prototype.start = function(e, draggable) {
 
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
-  if (draggable.is_end) return
-  draggable.is_end = true
-  setTimeout(_=>{
-    draggable.is_end = false
-  },100)
   if(draggable.hasOwnProperty('length')) draggable = draggable[0]
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
   if (
