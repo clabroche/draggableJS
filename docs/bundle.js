@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 const $ = require("jquery");
 const _ = require("lodash");
+
 function DraggableJS(options = {}) {
   this.options = options
   if (!options.hasOwnProperty("class")) {
@@ -19,6 +20,8 @@ function DraggableJS(options = {}) {
   Array.from($("." + this.options.draggableClass)).map(draggable => {
     this.initDraggable(draggable);
   });
+
+  this.elementsInDropzone = new Set()
   this.zindex = 1000
 }
 
@@ -42,6 +45,7 @@ DraggableJS.prototype.start = function(e, draggable) {
 
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
+  if(draggable.hasOwnProperty('length')) draggable = draggable[0]
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
   if (
     classesFromPoint.includes(this.options.stackClass) ||
@@ -59,6 +63,9 @@ DraggableJS.prototype.end = function(e, draggable) {
           .initalPosition.offset.y}px)`,
       });
     }
+    this.elementsInDropzone.delete(draggable)
+  } else {
+    this.elementsInDropzone.add(draggable)
   }
 };
 

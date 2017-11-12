@@ -1,5 +1,6 @@
 const $ = require("jquery");
 const _ = require("lodash");
+
 function DraggableJS(options = {}) {
   this.options = options
   if (!options.hasOwnProperty("class")) {
@@ -18,6 +19,8 @@ function DraggableJS(options = {}) {
   Array.from($("." + this.options.draggableClass)).map(draggable => {
     this.initDraggable(draggable);
   });
+
+  this.elementsInDropzone = new Set()
   this.zindex = 1000
 }
 
@@ -41,6 +44,7 @@ DraggableJS.prototype.start = function(e, draggable) {
 
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
+  if(draggable.hasOwnProperty('length')) draggable = draggable[0]
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
   if (
     classesFromPoint.includes(this.options.stackClass) ||
@@ -58,6 +62,9 @@ DraggableJS.prototype.end = function(e, draggable) {
           .initalPosition.offset.y}px)`,
       });
     }
+    this.elementsInDropzone.delete(draggable)
+  } else {
+    this.elementsInDropzone.add(draggable)
   }
 };
 
