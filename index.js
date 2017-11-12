@@ -18,6 +18,7 @@ function DraggableJS(options = {}) {
   Array.from($("." + this.options.draggableClass)).map(draggable => {
     this.initDraggable(draggable);
   });
+  this.zindex = 1000
 }
 
 DraggableJS.prototype.start = function(e, draggable) {
@@ -33,6 +34,8 @@ DraggableJS.prototype.start = function(e, draggable) {
     this.initDraggable(newDraggable);
     draggable.copy = true
   }
+
+  $(draggable).css({ zIndex: ++this.zindex });
   draggable.tempOffset = $(draggable).offset();
 };
 
@@ -52,7 +55,7 @@ DraggableJS.prototype.end = function(e, draggable) {
         position: "absolute",
         width: draggable.initalPosition.width,
         transform: `translate(${draggable.initalPosition.offset.x}px,${draggable
-          .initalPosition.offset.y}px)`
+          .initalPosition.offset.y}px)`,
       });
     }
   }
