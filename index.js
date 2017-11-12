@@ -113,7 +113,7 @@ DraggableJS.prototype.initDraggable = function(draggable) {
   $(draggable).on("touchend", e => this.end(e.changedTouches[0], draggable));
   $(draggable).on("mousedown", e => this.start(e, draggable));
   $(draggable).on("mouseup", e => this.end(e, draggable));
-  // $(draggable).on("mouseleave", e => this.end(e, draggable));
+  $(draggable).on("mouseleave", e => this.end(e, draggable));
   $(draggable).on("mousemove", e => this.move(e, draggable));
 };
 
