@@ -1,6 +1,3 @@
-const $ = require("jquery");
-const _ = require("lodash");
-
 function DraggableJS(options = {}) {
   this.options = options
   if (!options.hasOwnProperty("class")) {

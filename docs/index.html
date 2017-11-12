@@ -19,23 +19,37 @@
     <div class="container">
         <div class="otherList">
             no drop here
+            <div class="infosDropzone">
+                infos:
+                <div class="text">
+
+                </div>
+
+            </div>
         </div>
         <div class="stack">
-            <div class="draggable element">element1</div>
-            <div class="draggable element">element2</div>
-            <div class="draggable element">element3</div>
-            <div class="draggable element">element4</div>
+            <div price="1000" class="draggable element">element1</div>
+            <div price="10" class="draggable element">element2</div>
+            <div price="100" class="draggable element">element3</div>
+            <div price="42" class="draggable element">element4</div>
         </div>
         <div class="dropzone">DropZone</div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="bundle.js"></script>
     <script>
-        new DraggableJS({
+        const draggableJS = new DraggableJS({
             draggableClass: "draggable",
             stackClass: "stack",
             dropClass: "dropzone",
             clone: true
         })
+        setInterval(_ => {
+            $('.infosDropzone .text').empty()
+            Array.from(draggableJS.elementsInDropzone).map(element => {
+                $('.infosDropzone .text').append($('<div>').append(`${$(element).text()}: ${$(element).attr('price')}€`))
+            })
+        }, 100)
     </script>
 </body>
 
