@@ -39,6 +39,7 @@ DraggableJS.prototype.start = function(e, draggable) {
 DraggableJS.prototype.end = function(e, draggable) {
   draggable.is_click = false;
   const classesFromPoint = getClassesFromPoint(e.pageX, e.pageY);
+  console.log(classesFromPoint)
   if (
     classesFromPoint.includes(this.options.stackClass) ||
     !classesFromPoint.includes(this.options.dropClass)
@@ -67,7 +68,7 @@ DraggableJS.prototype.move = function(e, draggable) {
         initialX +
         draggable.tempOffset.left}px, ${e.pageY -
         initialY +
-        draggable.tempOffset.top}px)`,
+        draggable.tempOffset.top - 10}px)`,
       width: draggable.initalPosition.width,
       position: "absolute"
     });
