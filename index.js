@@ -1,6 +1,6 @@
 function DraggableJS(options = {}) {
   this.options = options
-  if (!options.hasOwnProperty("class")) {
+  if (!options.hasOwnProperty("draggableClass")) {
     this.options.draggableClass = "draggable";
   } else this.options.draggableClass = options.class;
   if (!options.hasOwnProperty("stackClass")) {
